@@ -33,9 +33,9 @@ namespace TTRPG_Combat_Turn_Tracker.Server.Objects
             await Group.SendAsync("ClientLeft", user);
         }
 
-        public async Task NextTurn()
+        public async Task GetUsers()
         {
-            await Group.SendAsync("NextTurn");
+            await Group.SendAsync("AllUsers", _users);
         }
 
         public async Task AddCharacter(Character character)
@@ -48,6 +48,16 @@ namespace TTRPG_Combat_Turn_Tracker.Server.Objects
         {
             _characters.Remove(character);
             await Group.SendAsync("RemoveCharacter", character);
+        }
+
+        public async Task GetCharacters()
+        {
+            await Group.SendAsync("AllCharacters", _characters);
+        }
+
+        public async Task NextTurn()
+        {
+            await Group.SendAsync("NextTurn");
         }
         public IClientProxy Group => _hubContext.Clients.Group(_encounterId);
     }

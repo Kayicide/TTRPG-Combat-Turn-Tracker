@@ -30,6 +30,13 @@ namespace TTRPG_Combat_Turn_Tracker.Server.Hubs
             await _encounterService.CreateEncounter(encounterId, user);
         }
 
+        public async Task GetUsers(string encounterId)
+        {
+            Console.WriteLine($"Client: {Context.ConnectionId}; For Group: \"{encounterId}\"; All Users");
+
+            await _encounterService.GetUsers(encounterId);
+        }
+
         public async Task NextTurn(string encounterId)
         {
             Console.WriteLine($"Client: {Context.ConnectionId}; For Group: \"{encounterId}\"; Next Turn");
@@ -49,6 +56,13 @@ namespace TTRPG_Combat_Turn_Tracker.Server.Hubs
             Console.WriteLine($"Client: {Context.ConnectionId}; For Group: \"{encounterId}\"; Removed Character");
 
             await _encounterService.RemoveCharacter(encounterId, character);
+        }
+
+        public async Task GetCharacters(string encounterId)
+        {
+            Console.WriteLine($"Client: {Context.ConnectionId}; For Group: \"{encounterId}\"; All Characters");
+
+            await _encounterService.GetCharacters(encounterId);
         }
     }
 }

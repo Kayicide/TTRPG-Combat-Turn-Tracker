@@ -29,6 +29,11 @@ namespace TTRPG_Combat_Turn_Tracker.Server.Services
                 _encounters[encounterId] = new Encounter(encounterId, _hubContext, user);
         }
 
+        public async Task GetUsers(string encounterId)
+        {
+            await _encounters[encounterId].GetUsers();
+        }
+
         public async Task NextTurn(string encounterId)
         {
             if (_encounters.ContainsKey(encounterId))
@@ -45,6 +50,11 @@ namespace TTRPG_Combat_Turn_Tracker.Server.Services
         public async Task RemoveCharacter(string encounterId, Character character)
         {
             await _encounters[encounterId].RemoveCharacter(character);
+        }
+
+        public async Task GetCharacters(string encounterId)
+        {
+            await _encounters[encounterId].GetCharacters();
         }
 
     }
