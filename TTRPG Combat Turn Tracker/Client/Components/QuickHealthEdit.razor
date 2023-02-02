@@ -1,0 +1,45 @@
+﻿<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+
+    @if (IsOpen)
+    {
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div class="relative rounded-lg shadow bg-gray-700 w-96">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-5 border-b-2 rounded-t dark:border-gray-600">
+                        <h3 class="text-3xl font-bold text-gray-900 dark:text-white">
+                            @_character.Name
+                        </h3>
+                        <button type="button" @onclick="Close" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="medium-modal">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-6 space-y-6 flex flex-col">
+                        <div class="flex flex-row justify-evenly">
+                            <div class="flex flex-col justify-items-start w-24 pl-3">
+                                <div class="flex justify-center">
+                                    <h1 class="block mb-1 text-xl font-medium text-white">Current</h1>
+                                </div>
+                                <input id="current" type="number" @ref="textInput" @bind="_current" @onkeydown="Enter" class="border border-gray-400 bg-gray-600 text-white text-xl text-center rounded-lg block w-full p-3">
+                            </div>
+                            <div class="flex flex-col justify-items-start w-24 pl-3">
+                                <div class="flex justify-center">
+                                    <h1 class="block mb-1 text-xl font-medium text-white">Max</h1>
+                                </div>
+                                <input id="max" type="number" @bind="_max" class="border border-gray-400 bg-gray-700 text-white text-xl text-center text-gray-400 rounded-lg block w-full p-3 cursor-not-allowed" disabled>
+                            </div>
+                        </div>
+                    </div>
+                        <!-- Modal footer -->
+                    <div class="flex grow items-center p-6 space-x-2 border-t-2 border-gray-200 rounded-b dark:border-gray-600">
+                        <button type="submit" @onclick="Set" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-lg w-full px-5 py-2.5 text-center">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

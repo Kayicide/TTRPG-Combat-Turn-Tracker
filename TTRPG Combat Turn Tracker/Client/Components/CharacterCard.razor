@@ -1,0 +1,21 @@
+﻿@using TTRPG_Combat_Turn_Tracker.Shared.Enums
+<div class="p-5 my-10 rounded-lg flex flex-col justify-between items-center w-full @_bgColour">
+    <div class="flex justify-between items-center w-full">
+        <div class="flex flex-col">
+            <h3 class="text-white font-bold @_textSize">@Character.Name</h3>
+            @if (Position == CharacterPosition.Current)
+            {
+                <p class="text-base text-lime-500 font-semibold" style="padding-left: 1px;">Poisoned</p>
+            }
+        </div>
+        <div class="flex flex-row">
+            <StatSquare Type="StatType.Initiative" Value="@Character.Initiative" Size="Position == CharacterPosition.Current ? Size.Large : Size.Medium"></StatSquare>
+            <StatSquare Type="StatType.ArmourClass" Value="@Character.ArmourClass" Size="Position == CharacterPosition.Current ? Size.Large : Size.Medium"></StatSquare>
+            <div @onclick="OpenQuickHealthEditModal" class="cursor-pointer">
+                <StatSquare Type="StatType.Health" Value="@Character.CurrentHealth" Size="Position == CharacterPosition.Current ? Size.Large : Size.Medium"></StatSquare>
+            </div>
+        </div>
+    </div>
+</div>
+
+<QuickHealthEdit @ref="_quickHealthEdit"></QuickHealthEdit>

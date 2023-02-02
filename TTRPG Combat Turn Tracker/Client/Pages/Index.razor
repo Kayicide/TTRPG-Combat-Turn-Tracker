@@ -1,0 +1,30 @@
+﻿@page "/"
+@using TTRPG_Combat_Turn_Tracker.Shared.Enums
+<PageTitle>TTRPG CTT</PageTitle>
+<div class="h-screen flex relative">
+    <div class="h-full w-72">
+    </div>
+    <div class="flex grow items-center justify-center">
+        <div class="flex items-center justify-center flex-col items-center sm:w-full md:w-full lg:w-5/6 xl:w-4/5 2xl:w-6/12">
+            <CharacterCard Character="@CharacterService.GetNext()" Position="CharacterPosition.Next"></CharacterCard>
+            <CharacterCard Character="@CharacterService.GetCurrent()" Position="CharacterPosition.Current"></CharacterCard>
+            <CharacterCard Character="@CharacterService.GetPrevious()" Position="CharacterPosition.Previous"></CharacterCard>
+        </div>
+    </div>
+    <div class="h-full w-72">
+        <LeftSideBar></LeftSideBar>
+    </div>
+    
+    <div class="fixed bottom-0 w-full h-24 flex">
+        <div class="h-full w-72"></div>
+        <div class="flex grow items-center justify-center">
+            <div class="flex items-center justify-center flex-col items-center h-full sm:w-full md:w-full lg:w-5/6 xl:w-4/5 2xl:w-2/3">
+                <ActionBar></ActionBar>
+            </div>
+        </div>
+        <div class="h-full w-72"></div>
+    </div>
+</div>
+
+
+

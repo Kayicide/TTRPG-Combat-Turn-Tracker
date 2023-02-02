@@ -1,0 +1,28 @@
+﻿@using TTRPG_Combat_Turn_Tracker.Shared.Objects
+@using TTRPG_Combat_Turn_Tracker.Shared.Enums
+<div class="bg-gray-700 text-white h-full w-full flex flex-col">
+    <div class="flex flex-col grow items-center px-3">
+        <div>
+            <h1 class="text-3xl font-bold pt-3">Turn Order</h1>
+            <hr class="w-full h-1 mx-auto my-4 border-0 rounded bg-gray-600">
+        </div>
+        @foreach (Character character in CharacterService.GetAll())
+        {
+            <div class="text-white p-2 rounded-lg flex flex-col justify-between items-center w-full bg-gray-700 hover:bg-gray-800 cursor-pointer">
+                <div class="flex justify-between items-center w-full">
+                    <div class="flex flex-col text-center">
+                        <h3 class="text-2xl  font-semibold text-center">@character.FirstName</h3>
+                    </div>
+                    <div class="flex flex-row">
+                        <StatSquare Type="StatType.ArmourClass" Value="@character.ArmourClass" Size="Size.Small"></StatSquare>
+                        <div @onclick="() => OpenQuickHealthEditModal(character)">
+                            <StatSquare Type="StatType.Health" Value="@character.CurrentHealth" Size="Size.Small"></StatSquare>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<QuickHealthEdit @ref="_quickHealthEdit"></QuickHealthEdit>

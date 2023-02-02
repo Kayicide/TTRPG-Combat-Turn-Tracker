@@ -1,0 +1,24 @@
+﻿<div class="text-white rounded-t-lg flex flex-row justify-between items-center h-full w-full bg-gray-700 px-5 py-3">
+    <div class="flex flex-row justify-around items-center grow h-full">
+        <button class="py-2 px-3 bg-indigo-500 hover:bg-indigo-700 disabled:bg-gray-500 text-white text-lg font-semibold rounded-md shadow focus:outline-none lg:w-24 xl:w-24 2xl:w-28 h-full" disabled="disabled">Coming Soon</button>
+        <button @onclick="OpenCharacterModal" class="py-2 px-3 bg-indigo-500 hover:bg-indigo-700 disabled:bg-gray-500 text-white text-lg font-semibold rounded-md shadow focus:outline-none lg:w-24 xl:w-24 2xl:w-28 h-full">Add Ally</button>
+        <button @onclick="OpenMonsterModal" class="py-2 px-3 bg-indigo-500 hover:bg-indigo-700 disabled:bg-gray-500 text-white text-lg font-semibold rounded-md shadow focus:outline-none lg:w-24 xl:w-24 2xl:w-28 h-full">Add Enemy</button>
+    </div>
+    <div class="flex grow flex-col justify-between items-center h-full">
+        <button @onclick="NextTurn" class="absolute bg-indigo-500 hover:bg-indigo-700 font-semibold rounded-md w-24 h-24 xl:w-28 xl:h-28 -translate-y-1/2 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 xl:w-20 xl:h-20">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+        </button>
+    </div>
+    <div class="flex flex-row-reverse justify-around items-center grow h-full divide-x divide-gray-600">
+        <button class="py-2 px-3 bg-indigo-500 hover:bg-indigo-700 disabled:bg-gray-500 text-white text-lg font-semibold rounded-md shadow focus:outline-none lg:w-24 xl:w-24 2xl:w-28 h-full" disabled="disabled">Coming Soon</button>
+        <button class="py-2 px-3 bg-indigo-500 hover:bg-indigo-700 disabled:bg-gray-500 text-white text-lg font-semibold rounded-md shadow focus:outline-none lg:w-24 xl:w-24 2xl:w-28 h-full" disabled="disabled">Coming Soon</button>
+        <button class="py-2 px-3 bg-indigo-500 hover:bg-indigo-700 disabled:bg-gray-500 text-white text-lg font-semibold rounded-md shadow focus:outline-none lg:w-24 xl:w-24 2xl:w-28 h-full" disabled="disabled">Coming Soon</button>
+    </div>
+</div>
+
+        
+        
+<AddCharacter @ref="_addCharacterModal"/>
+<AddMonster @ref="_addMonsterModal"/>
