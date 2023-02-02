@@ -36,5 +36,19 @@ namespace TTRPG_Combat_Turn_Tracker.Server.Hubs
 
             await _encounterService.NextTurn(encounterId);
         }
+
+        public async Task AddCharacter(string encounterId, Character character)
+        {
+            Console.WriteLine($"Client: {Context.ConnectionId}; For Group: \"{encounterId}\"; Added Character");
+
+            await _encounterService.AddCharacter(encounterId, character);
+        }
+
+        public async Task RemoveCharacter(string encounterId, Character character)
+        {
+            Console.WriteLine($"Client: {Context.ConnectionId}; For Group: \"{encounterId}\"; Removed Character");
+
+            await _encounterService.RemoveCharacter(encounterId, character);
+        }
     }
 }

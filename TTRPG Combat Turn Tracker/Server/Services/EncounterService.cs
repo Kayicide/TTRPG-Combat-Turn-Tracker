@@ -37,5 +37,15 @@ namespace TTRPG_Combat_Turn_Tracker.Server.Services
             }
         }
 
+        public async Task AddCharacter(string encounterId, Character character)
+        {
+            await _encounters[encounterId].AddCharacter(character);
+        }
+
+        public async Task RemoveCharacter(string encounterId, Character character)
+        {
+            await _encounters[encounterId].RemoveCharacter(character);
+        }
+
     }
 }
