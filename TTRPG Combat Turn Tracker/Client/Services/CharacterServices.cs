@@ -44,8 +44,11 @@ namespace TTRPG_Combat_Turn_Tracker.Client.Services
             if (_hubConnection != null)
             {
                 _currentEncounterId = id;
-                await _hubConnection.SendAsync("JoinEncounter", id);
-                await _hubConnection.SendAsync("AllEncounterUsers", id);
+
+                await _hubConnection.SendAsync("CreateEncounter", id, "new users lol"); //remove this later, just for testing, might do a joinOrCreate, idk.
+
+                await _hubConnection.SendAsync("JoinEncounter", id, "new users lol");
+                //await _hubConnection.SendAsync("AllEncounterUsers", id);
             }
         }
 

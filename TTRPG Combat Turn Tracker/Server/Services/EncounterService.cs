@@ -1,4 +1,6 @@
-﻿using System.Collections.Concurrent;
+﻿using Microsoft.AspNetCore.SignalR;
+using System.Collections.Concurrent;
+using TTRPG_Combat_Turn_Tracker.Server.Hubs;
 using TTRPG_Combat_Turn_Tracker.Server.Objects;
 using TTRPG_Combat_Turn_Tracker.Shared.Objects;
 
@@ -6,40 +8,33 @@ namespace TTRPG_Combat_Turn_Tracker.Server.Services
 {
     public class EncounterService
     {
-        private readonly ConcurrentDictionary<string, Encounter> _encounters = new ConcurrentDictionary<string, Encounter>();
+        private readonly IHubContext<EncounterHub> _hubContext;
+        private readonly Dictionary<string, Encounter> _encounters;
 
-        public async Task JoinGroup(string id, User user)
+        public EncounterService(IHubContext<EncounterHub> hubContext)
         {
-            _encounters.AddOrUpdate(id,
-                new Encounter(id, user),
-                (key, existingVal) =>
-                {
-                    existingVal.AddUser(user);
-                    return existingVal;
-                });
+            _hubContext = hubContext;
+            _encounters = new Dictionary<string, Encounter>();
         }
 
-        public async Task CreateGroup(string id, User user)
+        public async Task JoinEncounter(string encounterId, User user)
         {
-            _encounters.TryAdd(id, new Encounter(id, user));
-            await JoinGroup(id, user);
+            if (_encounters.ContainsKey(encounterId))
+                await _encounters[encounterId].Join(user);
         }
 
-        public async Task LeaveGroup(string id, User user)
+        public async Task CreateEncounter(string encounterId, User user)
         {
-            _encounters.AddOrUpdate(id,
-                new Encounter(id),
-                (key, existingVal) =>
-                {
-                    existingVal.RemoveUser(user);
-                    return existingVal;
-                });
+            if (!_encounters.ContainsKey(encounterId))
+                _encounters[encounterId] = new Encounter(encounterId, _hubContext, user);
         }
 
-        public async Task<List<User>> GetGroupMembers(string groupName)
+        public async Task NextTurn(string encounterId)
         {
-            _encounters.TryGetValue(groupName, out Encounter? encounter);
-            return encounter?.GetAllUsers().ToList() ?? new List<User>();
+            if (_encounters.ContainsKey(encounterId))
+            {
+                await _encounters[encounterId].NextTurn();
+            }
         }
 
     }

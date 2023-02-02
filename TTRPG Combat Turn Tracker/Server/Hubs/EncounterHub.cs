@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using TTRPG_Combat_Turn_Tracker.Server.Services;
+using TTRPG_Combat_Turn_Tracker.Shared.Enums;
 using TTRPG_Combat_Turn_Tracker.Shared.Objects;
 
 namespace TTRPG_Combat_Turn_Tracker.Server.Hubs
@@ -7,31 +8,33 @@ namespace TTRPG_Combat_Turn_Tracker.Server.Hubs
     public class EncounterHub : Hub
     {
         private readonly EncounterService _encounterService;
+
         public EncounterHub(EncounterService encounterService)
         {
             _encounterService = encounterService;
         }
 
-        public override Task OnConnectedAsync()
+        public async Task JoinEncounter(string encounterId, string name)
         {
-            Console.WriteLine($"Client Connected: {Context.ConnectionId}");
-            return base.OnConnectedAsync();
+            Console.WriteLine($"Client: {Context.ConnectionId}; Joined Group: \"{encounterId}\"; with the username: \"{Context.ConnectionId}\"");
+
+            var user = new User(Context.ConnectionId, name, Role.Player);
+            await _encounterService.JoinEncounter(encounterId, user);
         }
 
-        public async Task JoinEncounter(string groupName)
+        public async Task CreateEncounter(string encounterId, string name)
         {
-            User user = new User(Context.ConnectionId, Context.ConnectionId);
+            Console.WriteLine($"Client: {Context.ConnectionId}; Created Group: \"{encounterId}\"; with the username: \"{Context.ConnectionId}\"");
 
-            await _encounterService.JoinGroup(groupName, user);
-
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-            Console.WriteLine($"Client: {Context.ConnectionId}; Joined Group: \"{groupName}\"; with the username: \"{Context.ConnectionId}\"");
-            await Clients.Group(groupName).SendAsync("ClientJoined", user);
+            var user = new User(Context.ConnectionId, name, Role.DungeonMaster);
+            await _encounterService.CreateEncounter(encounterId, user);
         }
 
-        public async Task NextTurn(string groupName)
+        public async Task NextTurn(string encounterId)
         {
-            await Clients.Group(groupName).SendAsync("NextTurn");
+            Console.WriteLine($"Client: {Context.ConnectionId}; For Group: \"{encounterId}\"; Next Turn");
+
+            await _encounterService.NextTurn(encounterId);
         }
     }
 }
